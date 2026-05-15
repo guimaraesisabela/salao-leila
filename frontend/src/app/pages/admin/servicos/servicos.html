@@ -1,0 +1,77 @@
+<div class="admin-container">
+  <header>
+    <div class="header-content">
+      <img src="tesoura.jpg" alt="Salão Leila" class="logo" />
+      <h1>Salão <strong>Leila</strong></h1>
+      <span class="badge-admin">Admin</span>
+    </div>
+    <button class="btn-agendamentos" (click)="irParaAgendamentos()">Ver agendamentos</button>
+  </header>
+
+  <main>
+    <div class="top">
+      <h2>Serviços</h2>
+      <button class="btn-novo" (click)="abrirFormulario()">+ Novo serviço</button>
+    </div>
+
+    <div class="erro" *ngIf="erro">{{ erro }}</div>
+    <div class="sucesso" *ngIf="sucesso">{{ sucesso }}</div>
+    <div class="carregando" *ngIf="carregando">Carregando...</div>
+    <div class="vazio" *ngIf="!carregando && servicos.length === 0">Nenhum serviço cadastrado.</div>
+
+    <div class="lista" *ngIf="!carregando && servicos.length > 0">
+      <div class="servico-card" *ngFor="let s of servicos">
+        <div class="info">
+          <span class="nome">{{ s.nome }}</span>
+          <span class="descricao" *ngIf="s.descricao">{{ s.descricao }}</span>
+          <div class="detalhes">
+            <span>R$ {{ s.preco | number:'1.2-2' }}</span>
+            <span>{{ s.duracaoMinutos }} min</span>
+          </div>
+        </div>
+        <div class="acoes">
+          <button class="btn-editar" (click)="abrirFormulario(s)">Editar</button>
+          <button class="btn-remover" (click)="remover(s._id)">Remover</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="mostrarFormulario" (click)="fecharFormulario()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>{{ editandoId ? 'Editar serviço' : 'Novo serviço' }}</h3>
+        <div class="campo">
+          <label>Nome</label>
+          <input type="text" [(ngModel)]="formulario.nome" name="nome" placeholder="Ex: Corte de cabelo" />
+        </div>
+        <div class="campo">
+          <label>Descrição (opcional)</label>
+          <input type="text" [(ngModel)]="formulario.descricao" name="descricao" placeholder="Ex: Corte feminino" />
+        </div>
+        <div class="campo">
+          <label>Preço (R$)</label>
+          <input type="number" [(ngModel)]="formulario.preco" name="preco" placeholder="0" />
+        </div>
+        <div class="campo">
+          <label>Duração (minutos)</label>
+          <input type="number" [(ngModel)]="formulario.duracaoMinutos" name="duracaoMinutos" placeholder="0" />
+        </div>
+        <div class="modal-acoes">
+          <button class="btn-cancelar" (click)="fecharFormulario()">Cancelar</button>
+          <button class="btn-salvar" (click)="salvar()">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="modalRemoverId" (click)="cancelarRemocao()">
+      <div class="modal modal-remover" (click)="$event.stopPropagation()">
+        <div class="icone-aviso">🗑️</div>
+        <h3>Remover serviço</h3>
+        <p>Tem certeza que deseja remover este serviço? Esta ação não pode ser desfeita.</p>
+        <div class="modal-acoes">
+          <button class="btn-cancelar" (click)="cancelarRemocao()">Cancelar</button>
+          <button class="btn-salvar btn-deletar" (click)="confirmarRemocao()">Sim, remover</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

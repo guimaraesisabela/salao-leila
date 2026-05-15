@@ -1,0 +1,226 @@
+.agendamento-container {
+  min-height: 100vh;
+  background: #FFF5F8;
+
+  header {
+    background: white;
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(214, 51, 108, 0.1);
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+      }
+
+      h1 {
+        font-size: 22px;
+        color: #1a1a1a;
+
+        strong {
+          color: #FF4081;
+        }
+      }
+    }
+
+    .btn-historico {
+      background: transparent;
+      border: 1.5px solid #FF4081;
+      color: #FF4081;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #FF4081;
+        color: white;
+      }
+    }
+  }
+
+  main {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 0 24px;
+
+    h2 {
+      font-size: 24px;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .subtitulo {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .erro {
+      background: #ffe0e6;
+      color: #D6336C;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .sucesso {
+      background: #e0f7ea;
+      color: #2e7d32;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .sugestao {
+      background: #FFF0F5;
+      border: 1.5px solid #FFB6C1;
+      color: #D6336C;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .servicos {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+
+      .servico-card {
+        background: white;
+        border: 1.5px solid #FFB6C1;
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+
+        &:hover {
+          border-color: #FF4081;
+        }
+
+        &.selecionado {
+          border-color: #FF4081;
+          background: #FFF5F8;
+        }
+
+        .servico-info {
+          display: flex;
+          flex-direction: column;
+
+          .nome {
+            font-weight: 500;
+            color: #1a1a1a;
+          }
+
+          .duracao {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+          }
+        }
+
+        .preco {
+          font-weight: 600;
+          color: #FF4081;
+        }
+
+        .check {
+          position: absolute;
+          top: 8px;
+          right: 12px;
+          color: #FF4081;
+          font-weight: 700;
+          font-size: 16px;
+        }
+      }
+
+      .vazio {
+        color: #888;
+        font-size: 14px;
+        text-align: center;
+        padding: 24px;
+      }
+    }
+
+    .formulario {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(214, 51, 108, 0.08);
+
+      .campo {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        label {
+          font-size: 13px;
+          font-weight: 600;
+          color: #444;
+          margin-bottom: 6px;
+        }
+
+        input, textarea {
+          padding: 12px 16px;
+          border: 1.5px solid #FFB6C1;
+          border-radius: 8px;
+          font-size: 14px;
+          outline: none;
+          font-family: 'Roboto', sans-serif;
+          transition: border-color 0.2s;
+          background: #FFF5F8;
+
+          &:focus {
+            border-color: #FF4081;
+            background: white;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 80px;
+        }
+      }
+
+      .btn-agendar {
+        width: 100%;
+        padding: 14px;
+        background: #FF4081;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: #D6336C;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<div class="cadastro-container">
+  <div class="card">
+    <div class="logo">
+      <img src="tesoura.jpg" alt="Salão Leila" class="icone" />
+      <h1>Salão <strong>Leila</strong></h1>
+      <p>Agende seus serviços com facilidade</p>
+    </div>
+
+    <form (ngSubmit)="entrar()">
+      <div class="campo">
+        <label>Nome completo</label>
+        <input type="text" [(ngModel)]="usuario.nome" name="nome" placeholder="Seu nome" required />
+      </div>
+
+      <div class="campo">
+        <label>E-mail</label>
+        <input type="email" [(ngModel)]="usuario.email" name="email" placeholder="seu@email.com" required />
+      </div>
+
+      <div class="campo">
+        <label>Telefone</label>
+        <input type="tel" [(ngModel)]="usuario.telefone" name="telefone" placeholder="(00) 00000-0000" required />
+      </div>
+
+      <p class="erro" *ngIf="erro">{{ erro }}</p>
+
+      <button type="submit" [disabled]="carregando">
+        {{ carregando ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+  </div>
+</div>

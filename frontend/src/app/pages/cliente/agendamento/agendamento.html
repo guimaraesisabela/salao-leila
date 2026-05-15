@@ -1,0 +1,57 @@
+<div class="agendamento-container">
+  <header>
+    <div class="header-content">
+      <img src="tesoura.jpg" alt="Salão Leila" class="logo" />
+      <h1>Salão <strong>Leila</strong></h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn-historico" (click)="irParaHistorico()">Meus agendamentos</button>
+    </div>
+  </header>
+
+  <main>
+    <h2>Novo agendamento</h2>
+    <p class="subtitulo">Olá, <strong>{{ cliente?.nome }}</strong>! Escolha seus serviços:</p>
+
+    <div class="erro" *ngIf="erro">{{ erro }}</div>
+    <div class="sucesso" *ngIf="sucesso">{{ sucesso }}</div>
+
+    <div class="sugestao" *ngIf="sugestaoData">
+      💡 Você já tem um agendamento nessa semana. Que tal marcar tudo no dia <strong>{{ sugestaoData }}</strong>?
+    </div>
+
+    <section class="servicos">
+      <div
+        class="servico-card"
+        *ngFor="let servico of servicos"
+        [class.selecionado]="selecionado(servico._id)"
+        (click)="toggleServico(servico._id)"
+      >
+        <div class="servico-info">
+          <span class="nome">{{ servico.nome }}</span>
+          <span class="duracao">{{ servico.duracaoMinutos }} min</span>
+        </div>
+        <span class="preco">R$ {{ servico.preco | number:'1.2-2' }}</span>
+        <span class="check" *ngIf="selecionado(servico._id)">✓</span>
+      </div>
+
+      <p class="vazio" *ngIf="servicos.length === 0 && !erro">Nenhum serviço disponível no momento.</p>
+    </section>
+
+    <section class="formulario">
+      <div class="campo">
+        <label>Data e horário</label>
+        <input type="datetime-local" [(ngModel)]="dataHora" name="dataHora" />
+      </div>
+
+      <div class="campo">
+        <label>Observação (opcional)</label>
+        <textarea [(ngModel)]="observacao" name="observacao" placeholder="Ex: preferência de horário, alguma alergia..."></textarea>
+      </div>
+
+      <button class="btn-agendar" (click)="agendar()" [disabled]="carregando">
+        {{ carregando ? 'Agendando...' : 'Confirmar agendamento' }}
+      </button>
+    </section>
+  </main>
+</div>

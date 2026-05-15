@@ -1,0 +1,81 @@
+<div class="admin-container">
+  <header>
+    <div class="header-content">
+      <img src="tesoura.jpg" alt="Salão Leila" class="logo" />
+      <h1>Salão <strong>Leila</strong></h1>
+      <span class="badge-admin">Admin</span>
+    </div>
+    <button class="btn-servicos" (click)="irParaServicos()">Gerenciar serviços</button>
+  </header>
+
+  <main>
+    <h2>Agendamentos</h2>
+
+    <div class="erro" *ngIf="erro">{{ erro }}</div>
+    <div class="sucesso" *ngIf="sucesso">{{ sucesso }}</div>
+    <div class="carregando" *ngIf="carregando">Carregando...</div>
+    <div class="vazio" *ngIf="!carregando && agendamentos.length === 0">Nenhum agendamento encontrado.</div>
+
+    <div class="lista" *ngIf="!carregando && agendamentos.length > 0">
+      <div class="agendamento-card" *ngFor="let ag of agendamentos">
+        <div class="card-header">
+          <div class="info-cliente">
+            <span class="nome">{{ ag.cliente?.nome }}</span>
+            <span class="telefone">{{ ag.cliente?.telefone }}</span>
+          </div>
+          <span class="data">{{ ag.dataHora | date:'dd/MM/yyyy - HH:mm' }}</span>
+        </div>
+
+        <div class="servicos">
+          <span class="servico-tag" *ngFor="let s of ag.servicos">{{ s.nome }}</span>
+        </div>
+
+        <p class="observacao" *ngIf="ag.observacao">📝 {{ ag.observacao }}</p>
+
+        <div class="card-footer">
+          <span class="status" [ngClass]="getStatusClass(ag.status)">{{ ag.status }}</span>
+          <div class="acoes">
+            <button class="btn-editar" (click)="abrirEdicao(ag)">Editar</button>
+            <button class="btn-confirmar" (click)="atualizarStatus(ag._id, 'confirmado')" *ngIf="ag.status === 'pendente'">Confirmar</button>
+            <button class="btn-concluir" (click)="atualizarStatus(ag._id, 'concluido')" *ngIf="ag.status === 'confirmado'">Concluir</button>
+            <button class="btn-cancelar" (click)="atualizarStatus(ag._id, 'cancelado')" *ngIf="ag.status !== 'cancelado' && ag.status !== 'concluido'">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="modalEditarId" (click)="fecharEdicao()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <h3>Editar agendamento</h3>
+
+        <div class="campo">
+          <label>Data e horário</label>
+          <input type="datetime-local" [(ngModel)]="formularioEdicao.dataHora" name="dataHora" />
+        </div>
+
+        <div class="campo">
+          <label>Serviços</label>
+          <div class="servicos-grid">
+            <div
+              class="servico-opcao"
+              *ngFor="let s of servicos"
+              [class.selecionado]="servicoSelecionado(s._id)"
+              (click)="toggleServico(s._id)">
+              {{ s.nome }}
+            </div>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Observação (opcional)</label>
+          <textarea [(ngModel)]="formularioEdicao.observacao" name="observacao"></textarea>
+        </div>
+
+        <div class="modal-acoes">
+          <button class="btn-cancelar-modal" (click)="fecharEdicao()">Cancelar</button>
+          <button class="btn-salvar" (click)="salvarEdicao()">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
